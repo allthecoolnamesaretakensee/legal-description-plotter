@@ -1,0 +1,17 @@
+{
+  "name": "legal-description-plotter",
+  "version": "1.0.0",
+  "description": "AI-powered legal description parser and CAD exporter for surveyors",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@anthropic-ai/sdk": "^0.24.0",
+    "docx": "^8.5.0"
+  }
+}
