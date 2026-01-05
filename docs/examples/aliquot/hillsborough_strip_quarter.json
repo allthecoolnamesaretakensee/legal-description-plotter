@@ -1,0 +1,92 @@
+{
+  "name": "Hillsborough County - Strip with Quarter Division",
+  "description": "Tests North strip + W 1/4 parsing (W 1/4 should divide by 4, not 2)",
+  "source": "User-submitted bug report, Jan 2025",
+  "fixed_in_version": "v36",
+  
+  "input": {
+    "legal_text": "The North 200 feet of the West 1/4 of the NW 1/4 of the NE 1/4 of the SE 1/4 of Section 33, Township 28 South, Range 18 East, Hillsborough County, Florida."
+  },
+  
+  "expected_output": {
+    "description_type": "fractional",
+    
+    "section_info": {
+      "section": 33,
+      "township": 28,
+      "township_dir": "S",
+      "range": 18,
+      "range_dir": "E"
+    },
+    
+    "subdivision_history": [
+      {
+        "step": 0,
+        "description": "Section 33",
+        "width": 5280,
+        "height": 5280,
+        "area_acres": 640
+      },
+      {
+        "step": 1,
+        "description": "SE 1/4",
+        "width": 2640,
+        "height": 2640,
+        "area_acres": 160
+      },
+      {
+        "step": 2,
+        "description": "NE 1/4",
+        "width": 1320,
+        "height": 1320,
+        "area_acres": 40
+      },
+      {
+        "step": 3,
+        "description": "NW 1/4",
+        "width": 660,
+        "height": 660,
+        "area_acres": 10
+      },
+      {
+        "step": 4,
+        "description": "W 1/4",
+        "width": 165,
+        "height": 660,
+        "area_acres": 2.5,
+        "notes": "W 1/4 divides WIDTH by 4, not 2"
+      },
+      {
+        "step": 5,
+        "description": "NORTH 200'",
+        "width": 165,
+        "height": 200,
+        "area_acres": 0.757,
+        "notes": "Strip modifier applied LAST"
+      }
+    ],
+    
+    "final_dimensions": {
+      "width": 165,
+      "height": 200,
+      "area_sqft": 33000,
+      "area_acres": 0.757
+    },
+    
+    "boundary_calls": [
+      { "direction": "East", "distance": 165, "description": "North line" },
+      { "direction": "South", "distance": 200, "description": "East line" },
+      { "direction": "West", "distance": 165, "description": "South line" },
+      { "direction": "North", "distance": 200, "description": "West line" }
+    ]
+  },
+  
+  "bugs_this_tests": [
+    "W 1/4 vs W 1/2 division (should divide by 4)",
+    "E 1/4, N 1/4, S 1/4 same logic",
+    "Strip ('North 200 feet') applied after aliquot divisions",
+    "'THE' prefix handling in strip detection"
+  ],
+  
+  "common_mistake": "Treating 'W 1/4' as 'W 1/2' results in width=330 instead of 165"
+}
