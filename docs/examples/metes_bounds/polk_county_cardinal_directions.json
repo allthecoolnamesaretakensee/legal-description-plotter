@@ -1,0 +1,122 @@
+{
+  "name": "Polk County - Cardinal Directions with Parallel",
+  "description": "Tests parsing of cardinal directions ('South and parallel with') and POC/POB detection",
+  "source": "User-submitted bug report, Jan 2025",
+  "fixed_in_version": "v37",
+  
+  "input": {
+    "legal_text": "Begin at the NW corner of the SE 1/4 of the SW 1/4 of Section 6, Township 29 South, Range 24 East, run thence South along the West line of SE 1/4 of SW 1/4 a distance of 504.34 feet, run thence South 89°05' East a distance of 200.0 feet to the Point of Beginning, continue thence South 89°05' East a distance of 115.0 feet, run thence South and parallel with said West line a distance of 160.0 feet, run thence North 89°05' West a distance of 110.0 feet, run thence North and parallel with said West line a distance of 20.0 feet, run thence North 89°05' West a distance of 5.0 feet, run thence North and parallel with said West line a distance of 140.0 feet to the Point of Beginning, all lying and being in Polk County, Florida, also known as Lot 18 of unrecorded Mt. View."
+  },
+  
+  "expected_output": {
+    "description_type": "metes_and_bounds",
+    "has_poc": true,
+    "has_tie_lines": true,
+    
+    "poc_description": "NW corner of the SE 1/4 of the SW 1/4 of Section 6, Township 29 South, Range 24 East",
+    
+    "tie_lines": [
+      {
+        "call_number": 1,
+        "direction_text": "South",
+        "bearing_decimal": 180,
+        "distance_feet": 504.34,
+        "along_description": "along the West line of SE 1/4 of SW 1/4"
+      },
+      {
+        "call_number": 2,
+        "direction_text": "South 89°05' East",
+        "quadrant": "SE",
+        "degrees": 89,
+        "minutes": 5,
+        "seconds": 0,
+        "bearing_decimal": 90.917,
+        "distance_feet": 200.0
+      }
+    ],
+    
+    "boundary_calls": [
+      {
+        "call_number": 1,
+        "direction_text": "South 89°05' East",
+        "quadrant": "SE",
+        "degrees": 89,
+        "minutes": 5,
+        "bearing_decimal": 90.917,
+        "distance_feet": 115.0,
+        "notes": "Continue from POB"
+      },
+      {
+        "call_number": 2,
+        "direction_text": "South and parallel with said West line",
+        "quadrant": "SE",
+        "degrees": 0,
+        "minutes": 0,
+        "bearing_decimal": 180,
+        "distance_feet": 160.0,
+        "notes": "Cardinal direction - Due South"
+      },
+      {
+        "call_number": 3,
+        "direction_text": "North 89°05' West",
+        "quadrant": "NW",
+        "degrees": 89,
+        "minutes": 5,
+        "bearing_decimal": 269.083,
+        "distance_feet": 110.0
+      },
+      {
+        "call_number": 4,
+        "direction_text": "North and parallel with said West line",
+        "quadrant": "NE",
+        "degrees": 0,
+        "minutes": 0,
+        "bearing_decimal": 0,
+        "distance_feet": 20.0,
+        "notes": "Cardinal direction - Due North"
+      },
+      {
+        "call_number": 5,
+        "direction_text": "North 89°05' West",
+        "quadrant": "NW",
+        "degrees": 89,
+        "minutes": 5,
+        "bearing_decimal": 269.083,
+        "distance_feet": 5.0
+      },
+      {
+        "call_number": 6,
+        "direction_text": "North and parallel with said West line",
+        "quadrant": "NE",
+        "degrees": 0,
+        "minutes": 0,
+        "bearing_decimal": 0,
+        "distance_feet": 140.0,
+        "notes": "Cardinal direction - Due North, closes to POB"
+      }
+    ],
+    
+    "expected_shape": "L-shaped (inverted)",
+    "total_boundary_calls": 6,
+    "should_close": true,
+    
+    "subdivision_info": {
+      "name": "Mt. View",
+      "lot": "18",
+      "recorded": false
+    }
+  },
+  
+  "bugs_this_tests": [
+    "Cardinal direction parsing ('South and parallel with')",
+    "POC vs POB detection",
+    "Tie line separation from boundary calls",
+    "'Parallel with said [X] line' pattern"
+  ],
+  
+  "civil3d_reference": {
+    "verified": true,
+    "dimensions": "115' × 160' (main), with 5' × 20' notch",
+    "closes": true
+  }
+}
